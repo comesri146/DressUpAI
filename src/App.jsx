@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './Login';
-import Api from './Api';
+import Login from './Login/Login';
+import Api from './Api/Api';
 
 function App() {
     return (
