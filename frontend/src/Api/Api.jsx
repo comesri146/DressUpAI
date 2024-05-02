@@ -123,11 +123,8 @@ export default function App() {
           <div className="bg-gray-100 rounded-lg">
             <input type="file" ref={inputFileRef2} id="file2" accept="image/*" hidden onChange={handleImageUpload2}></input>
             <div className="border-2 rounded-lg border-dashed m-4 h-[50vh]" data-img="">
-              {(resultImage && <img src={resultImage} style={{ objectFit: 'contain', width: '100%', height: '100%' }} />) 
-  
-              }
-              {loading && <p className='text-2xl text-black'>Loading...</p>}
-                   <h3>Result</h3>
+              {resultImage && <img src={resultImage} style={{ objectFit: 'contain', width: '100%', height: '100%' }} />}
+              {loading && <p>Loading...</p>}
             </div>
           </div>
           {img1 && img2 &&

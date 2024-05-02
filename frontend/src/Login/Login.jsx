@@ -1,39 +1,51 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/Auth';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient('https://iohuitdyrqduqjrpgjba.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvaHVpdGR5cnFkdXFqcnBnamJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQzMDk4NTksImV4cCI6MjAyOTg4NTg1OX0.fP3wGd2VH_bVuo-RogLMflru7wx458lB5jISBwBr9rA');
 
 const Login = () => {
     const { setIsAuthenticated } = useContext(AuthContext);
-    const [isActive, setIsActive] = useState(false);
-    const Route = useNavigate();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    onsubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Submitted');
-        setIsAuthenticated(true);
-        Route('/api')
+        const { data, error } = await supabase.auth.signInWithPassword({ email: username, password });
+        if (error) {
+            console.log('Error: ', error.message);
+        } else {
+            setIsAuthenticated(true);
+            navigate('/api');
+        }
     }
 
     return (
-    <>
-        <div className='text-7xl text-white font-bold'>DressUPAI</div>
-        <div className='flex items-center justify-center h-screen'>
-            <div className='justify-center pt-2 h-[17vh] w-[50vh] bg-white rounded-lg'>
-                <form className='flex flex-col items-center'>
-                    <input type='text'
-                        placeholder='Username'
-                        autoComplete='off'
-                        className='p-2 w-[95%] rounded-lg border border-gray-300' />
-                    <input type='password'
-                        autoComplete='off'
-                        placeholder='Password'
-                        className='m-4 p-2 w-[95%] rounded-lg border border-gray-300' />
-                    <button className='text-blue-500'>Register</button>
-                    <button className='block m-2 p-2 rounded-lg bg-blue-500 text-white' type='submit'>Login</button>
-                </form>
+        <>
+            <div className='text-7xl text-white font-bold'>DressUPAI</div>
+            <div className='flex items-center justify-center h-screen'>
+                <div className='justify-center pt-2 h-[17vh] w-[50vh] bg-white rounded-lg'>
+                    <form className='flex flex-col items-center' onSubmit={handleSubmit}>
+                        <input type='text'
+                            placeholder='Username'
+                            autoComplete='off'
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            className='p-2 w-[95%] rounded-lg border border-gray-300' />
+                        <input type='password'
+                            autoComplete='off'
+                            placeholder='Password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className='m-4 p-2 w-[95%] rounded-lg border border-gray-300' />
+                        <button className='text-blue-500'>Register</button>
+                        <button className='block m-2 p-2 rounded-lg bg-blue-500 text-white' type='submit'>Login</button>
+                    </form>
+                </div>
             </div>
-        </div>
-    </>
+        </>
     )
 }
 
