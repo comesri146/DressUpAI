@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/Auth';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient('https://iohuitdyrqduqjrpgjba.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvaHVpdGR5cnFkdXFqcnBnamJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQzMDk4NTksImV4cCI6MjAyOTg4NTg1OX0.fP3wGd2VH_bVuo-RogLMflru7wx458lB5jISBwBr9rA');
+const supabase = createClient( import.meta.env.VITE_SUPABASE_URL , import.meta.env.VITE_SUPABASE_KEY);
 
 const Login = () => {
     const { setIsAuthenticated } = useContext(AuthContext);
